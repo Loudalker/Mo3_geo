@@ -1,4 +1,3 @@
-//Variables = qNumber(null), timer(num), score(num), initials(text)
 let timer = 90;
 let runningTimer;
 let score = 500;
@@ -7,7 +6,6 @@ let qNumber;
 let finalScore;
 const MAX_HIGH_SCORES = 7;
 
-//DOM Objects = START BUTTON, ANSWER BUTTONS, QUESTION CONTAINER, QUESTION ELEMENT
 const startButton = document.getElementById("startButton");
 const finishButton = document.getElementById("finishButton");
 const qContainer = document.getElementById("questionsContainer");
@@ -17,15 +15,12 @@ const countdown = document.getElementById("timerArea");
 const scoreArea = document.getElementById("scoreArea");
 const highScoresButton = document.getElementById("showScoresButton");
 
-//LocalStorage Objects
 let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-//
+
 startButton.addEventListener("click", startGame);
 finishButton.addEventListener("click", startGame);
 highScoresButton.addEventListener("click", displayScores);
 finishButton.classList.add("hide");
-//function to start the game
-//called when start button is clicked, should run the function to display questions and the function to start the timer
 
 function startGame() {
   startButton.classList.add("hide");
@@ -42,8 +37,6 @@ function startGame() {
   showQuestion(questions[qNumber]);
 }
 
-//function to display the questions
-//should load one object from the questions array into the proper html elements, then run the function to collect answers
 function showQuestion(question) {
   qElement.innerText = question.question;
   question.answers.forEach(answer => {
@@ -58,8 +51,6 @@ function showQuestion(question) {
   });
 }
 
-//function to start the timer
-//should run a countdown that is displayed in the HTML, when time is up, should run the game over function
 function startClock() {
   countdown.innerHTML = "Time Remaining: " + timer;
   if (timer <= 0) {
@@ -70,9 +61,6 @@ function startClock() {
   }
 }
 
-//function to collect answers
-//should listen for what answer the user clicks on, compare it to the correct answer, and decrease the timer if wrong. should then run the next question function
-//unless the current question is the last, then it should run the game over function
 function selectAnswer(e) {
   const selectedButton = e.target;
   if (!selectedButton.dataset.correct) {
@@ -88,18 +76,12 @@ function selectAnswer(e) {
     console.log(score);
   }
 }
-
-//function to clear the current question
-//should empty the HTML elements that are occupied with the currently displayed question
 function clearQuestion() {
   while (answerButtons.firstChild) {
     answerButtons.removeChild(answerButtons.firstChild);
   }
 }
 
-//function for game over
-//should grab the current time remaining and set it as the score, hide the questions area, display the score to the user, and give them the chance to try again or submit
-//their high scores via a text box for intials and the high scores function
 function gameOver() {
   clearInterval(runningTimer);
   countdown.innerHTML = "Finished";
@@ -126,8 +108,6 @@ function showResults() {
   });
 }
 
-//function to submit high scores
-//should grab the users score and initials and add it to the high scores object, ranked numerically, and run the function to display the high scores
 function submitScores(e) {
   const score = {
     score: finalScore,
@@ -141,8 +121,6 @@ function submitScores(e) {
   displayScores();
 }
 
-//function to display high scores
-//should populate the HTML with a ranked display of the high scores and and provide the option to clear the scores via a function
 function displayScores() {
   clearInterval(runningTimer);
   countdown.innerHTML = "";
@@ -161,17 +139,12 @@ function displayScores() {
   highScoresButton.classList.add("hide");
 }
 
-//function to clear high scores
-//should fire on click, and erase the values of the high scores object
 function clearScores() {
   highScores = [];
   highScoresList.innerHTML = "<h3>Scores have been Cleared</h3>";
   document.getElementById("clearScores").classList.add("hide");
 }
 
-/////
-//Questions go Here
-/////
 const questions = [
   { //1
     question: "What is the highest mountain in France?",
